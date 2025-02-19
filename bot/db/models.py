@@ -9,6 +9,7 @@ class User(Base):
     username = Column(String(255), unique=True)
     fullname = Column(String)
 
+
 class Subscription(Base):
     __tablename__ = 'subscription'
     id = Column(BigInteger, primary_key=True)
@@ -16,4 +17,3 @@ class Subscription(Base):
     channel_id = Column(BigInteger)
     start_date = Column(DateTime)
     finish_date = Column(DateTime)
-    

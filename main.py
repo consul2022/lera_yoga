@@ -26,6 +26,8 @@ Configuration.secret_key = os.getenv('YOOKASSA_ID')
 
 SSL_CERTFILE = "/etc/letsencrypt/live/yogalera.ru/fullchain.pem"
 SSL_KEYFILE = "/etc/letsencrypt/live/yogalera.ru/privkey.pem"
+
+
 @web.middleware
 async def cors_middleware(request, handler):
     # Если это preflight-запрос (OPTIONS), возвращаем пустой ответ с заголовками CORS
@@ -63,6 +65,7 @@ async def on_shutdown(app):
     await bot.session.close()
     logger.info("Webhook deleted and aiohttp session closed.")
 
+
 dp = Dispatcher(store=MemoryStorage())
 dp.include_router(start_router)
 dp.include_router(callback_router)
@@ -70,10 +73,11 @@ app = web.Application(middlewares=[cors_middleware])
 app["bot"] = bot
 app.on_startup.append(on_startup)
 app.on_shutdown.append(on_shutdown)
-app.router.add_post("/payment/success",successful_payment_approve)
+app.router.add_post("/payment/success", successful_payment_approve)
 
 ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
 ssl_context.load_cert_chain(SSL_CERTFILE, SSL_KEYFILE)
+
 
 async def start_web_server():
     logger.info("Starting web server")
@@ -81,7 +85,7 @@ async def start_web_server():
     await runner.setup()
 
     site = web.TCPSite(runner, '0.0.0.0', 443, ssl_context=ssl_context)
-    #site = web.TCPSite(runner, '0.0.0.0', 8080)
+    # site = web.TCPSite(runner, '0.0.0.0', 8080)
     await site.start()
 
 
@@ -100,6 +104,3 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-
-
-

@@ -9,6 +9,8 @@ from yookassa.domain.notification import WebhookNotification
 from bot.bot import bot
 
 logger = logging.getLogger(__name__)
+
+
 async def successful_payment_approve(request):
     try:
         # Чтение данных из POST-запроса
@@ -51,7 +53,7 @@ async def successful_payment_approve(request):
         invite_link = await bot.create_chat_invite_link(CHANNEL_ID, expire_date=None, member_limit=1)
         buttons = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text="Присоединиться",
-                                  url= invite_link.invite_link)]
+                                  url=invite_link.invite_link)]
         ])
         # Отправляем пользователю ссылку
         invite_text = f"Присоединяйтесь к нашему закрытому каналу"
@@ -62,4 +64,3 @@ async def successful_payment_approve(request):
     except Exception as e:
         logger.exception("Error processing payment")
         return web.json_response({"status": "error", "message": "Internal Server Error"}, status=500)
-

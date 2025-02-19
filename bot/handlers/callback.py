@@ -89,15 +89,15 @@ async def subscription_callback(callback):
 
 @callback_router.callback_query(lambda callback: callback.data.startswith("start|lesson"))
 async def subscription_callback(callback):
-    await callback.message.answer_video(video="BAACAgIAAxkBAAPkZ6yH8HubZpd7jHyKiRpszptto5QAAs9oAAICbWBJNcx8NQ1HUkE2BA",
-                                        caption="""Добро пожаловать на бесплатный ознакомительный урок по йоге! ❣️
+    await callback.message.answer_video(video="AAMCAgADGQEAAgHOZ7Y8p3hxjI-EbfG4RvBFrhHrdaMAAtpvAAIEQbBJy60Hjd3i_X4BAAdtAAM2BA",
+                                        caption="""Добро пожаловать на бесплатный ознакомительный урок по йоге!❣️
 
 Я рада, что вы здесь! 
 Этот 25-минутный урок — ваш первый шаг к улучшению осанки, снятию напряжения и гармонизации тела и разума. 
 
 ➡️В нём вы найдёте:⬅️
 
-❣️Дыхательную практику для глубокого расслабления и восстановления энергии.  
+❣️Дыхательную практику для глубокого расслабления и восстановления энергии.
 ❣️Асаны для улучшения осанки — идеальные для снятия стресса и укрепления спины.
 ❣️Рекомендации по занятиям йогой
 
@@ -112,7 +112,6 @@ async def subscription_callback(callback):
 До встречи на коврике!❣️
 """)
     await callback.answer()
-
 
 # @callback_router.callback_query(lambda callback: callback.data.startswith("start|courses"))
 # async def subscription_callback(callback):
@@ -147,8 +146,3 @@ async def subscription_callback(callback):
 # До встречи на коврике❣️
 # """, reply_markup=buttons)
 #     await callback.answer()
-
-
-
-
-
