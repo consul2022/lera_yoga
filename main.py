@@ -73,21 +73,20 @@ async def main():
     app.on_startup.append(on_startup)
     app.on_shutdown.append(on_shutdown)
     app.router.add_post("/payment/success",successful_payment_approve)
-    try:
-        ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-        ssl_context.load_cert_chain(SSL_CERTFILE, SSL_KEYFILE)
 
-        runner = web.AppRunner(app)
-        await runner.setup()
-        site = web.TCPSite(
-            runner,
-            os.getenv("WEBHOOK_URL"),
-            443,
-            ssl_context=ssl_context
-        )
-        await site.start()
-    except:
-        print("No webhook")
+    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    ssl_context.load_cert_chain(SSL_CERTFILE, SSL_KEYFILE)
+
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(
+        runner,
+        os.getenv("WEBHOOK_URL"),
+        443,
+        ssl_context=ssl_context
+    )
+    await site.start()
+
     await dp.start_polling(bot)
 
 
