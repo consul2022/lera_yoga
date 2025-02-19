@@ -63,31 +63,43 @@ async def on_shutdown(app):
     await bot.session.close()
     logger.info("Webhook deleted and aiohttp session closed.")
 
+dp = Dispatcher(store=MemoryStorage())
+dp.include_router(start_router)
+dp.include_router(callback_router)
+app = web.Application(middlewares=[cors_middleware])
+app["bot"] = bot
+app.on_startup.append(on_startup)
+app.on_shutdown.append(on_shutdown)
+app.router.add_post("/payment/success",successful_payment_approve)
 
-async def main():
-    dp = Dispatcher(store=MemoryStorage())
-    dp.include_router(start_router)
-    dp.include_router(callback_router)
-    app = web.Application(middlewares=[cors_middleware])
-    app["bot"] = bot
-    app.on_startup.append(on_startup)
-    app.on_shutdown.append(on_shutdown)
-    app.router.add_post("/payment/success",successful_payment_approve)
+ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+ssl_context.load_cert_chain(SSL_CERTFILE, SSL_KEYFILE)
 
-    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    ssl_context.load_cert_chain(SSL_CERTFILE, SSL_KEYFILE)
-
+async def start_web_server():
+    logger.info("Starting web server")
     runner = web.AppRunner(app)
     await runner.setup()
-    site = web.TCPSite(
-        runner,
-        os.getenv("WEBHOOK_URL"),
-        443,
-        ssl_context=ssl_context
-    )
+
+    site = web.TCPSite(runner, '0.0.0.0', 443, ssl_context=ssl_context)
+    #site = web.TCPSite(runner, '0.0.0.0', 8080)
     await site.start()
 
-    await dp.start_polling(bot)
+
+async def main():
+    logger.info("Starting bot and web server")
+    try:
+        await bot.delete_webhook(drop_pending_updates=True)
+
+        await asyncio.gather(
+            dp.start_polling(bot),
+            start_web_server()
+        )
+    except Exception as e:
+        logger.error(f"Error occurred: {e}")
 
 
-asyncio.run(main())
+if __name__ == '__main__':
+    asyncio.run(main())
+
+
+
