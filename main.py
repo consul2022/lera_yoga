@@ -80,7 +80,7 @@ async def start_web_server():
     runner = web.AppRunner(app)
     await runner.setup()
 
-    site = web.TCPSite(runner, '0.0.0.0', 8443, ssl_context=ssl_context)
+    site = web.TCPSite(runner, '0.0.0.0', 443, ssl_context=ssl_context)
     #site = web.TCPSite(runner, '0.0.0.0', 8080)
     await site.start()
 
