@@ -87,7 +87,7 @@ async def main():
         )
         await site.start()
     except:
-        pass
+        print("No webhook")
     await dp.start_polling(bot)
 
 
