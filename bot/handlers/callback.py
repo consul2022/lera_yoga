@@ -9,7 +9,7 @@ callback_router = Router()
 async def subscription_callback(callback):
     payment = Payment.create({
         "amount": {
-            "value": "1,00",  # Сумма платежа
+            "value": "1.00",  # Сумма платежа
             "currency": "RUB"  # Валюта платежа
         },
         "confirmation": {
