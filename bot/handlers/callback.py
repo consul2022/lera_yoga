@@ -9,7 +9,7 @@ callback_router = Router()
 async def subscription_callback(callback):
     payment = Payment.create({
         "amount": {
-            "value": "3.500.00",  # Сумма платежа
+            "value": "3500.00",  # Сумма платежа
             "currency": "RUB"  # Валюта платежа
         },
         "confirmation": {
@@ -89,7 +89,7 @@ async def subscription_callback(callback):
 
 @callback_router.callback_query(lambda callback: callback.data.startswith("start|lesson"))
 async def subscription_callback(callback):
-    await callback.message.answer_video(video="AAMCAgADGQEAAgHOZ7Y8p3hxjI-EbfG4RvBFrhHrdaMAAtpvAAIEQbBJy60Hjd3i_X4BAAdtAAM2BA",
+    await callback.message.answer_video(video="BAACAgIAAxkBAAIBzme2PKd4cYyPhG3xuEbwRa4R63WjAALabwACBEGwScutB43d4v1-NgQ",
                                         caption="""Добро пожаловать на бесплатный ознакомительный урок по йоге!❣️
 
 Я рада, что вы здесь! 
