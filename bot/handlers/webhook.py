@@ -57,7 +57,7 @@ async def successful_payment_approve(request):
         ])
         # Отправляем пользователю ссылку
         invite_text = f"Поздравляем! Теперь присоединитесь к нашему закрытому каналу"
-        await bot.send_message(chat_id=user_id, thext=invite_text, reply_markup=buttons)
+        await bot.send_message(chat_id=user_id, text=invite_text, reply_markup=buttons)
 
         return web.json_response({"status": "success", "message": "Payment processed"})
 
