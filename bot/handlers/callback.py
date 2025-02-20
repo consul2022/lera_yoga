@@ -9,7 +9,7 @@ callback_router = Router()
 async def subscription_callback(callback):
     payment = Payment.create({
         "amount": {
-            "value": "3500.00",  # Сумма платежа
+            "value": "1,00",  # Сумма платежа
             "currency": "RUB"  # Валюта платежа
         },
         "confirmation": {
@@ -89,9 +89,8 @@ async def subscription_callback(callback):
 
 @callback_router.callback_query(lambda callback: callback.data.startswith("start|lesson"))
 async def subscription_callback(callback):
-    await callback.message.answer_video(
-        video="AAMCAgADGQEAAgHOZ7Y8p3hxjI-EbfG4RvBFrhHrdaMAAtpvAAIEQbBJy60Hjd3i_X4BAAdtAAM2BA",
-        caption="""Добро пожаловать на бесплатный ознакомительный урок по йоге!❣️
+    await callback.message.answer_video(video="AAMCAgADGQEAAgHOZ7Y8p3hxjI-EbfG4RvBFrhHrdaMAAtpvAAIEQbBJy60Hjd3i_X4BAAdtAAM2BA",
+                                        caption="""Добро пожаловать на бесплатный ознакомительный урок по йоге!❣️
 
 Я рада, что вы здесь! 
 Этот 25-минутный урок — ваш первый шаг к улучшению осанки, снятию напряжения и гармонизации тела и разума. 

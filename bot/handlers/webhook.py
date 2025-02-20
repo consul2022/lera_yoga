@@ -41,7 +41,7 @@ async def successful_payment_approve(request):
         if user_id is None:
             logger.error("Missing user_id in payment metadata")
             return web.json_response({"status": "error", "message": "Missing user_id"}, status=200)
-        CHANNEL_ID = 1002339239961
+        CHANNEL_ID = -1002339239961
         try:
             chat_member = await bot.get_chat_member(CHANNEL_ID, user_id)
             if chat_member.status in ["member", "administrator", "creator"]:
@@ -52,12 +52,12 @@ async def successful_payment_approve(request):
             # Генерируем ссылку-приглашение (одноразовую)
         invite_link = await bot.create_chat_invite_link(CHANNEL_ID, expire_date=None, member_limit=1)
         buttons = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="Присоединиться",
+            [InlineKeyboardButton(text="Присоединиться 🧘‍♀️",
                                   url=invite_link.invite_link)]
         ])
         # Отправляем пользователю ссылку
-        invite_text = f"Присоединяйтесь к нашему закрытому каналу"
-        await bot.send_message(invite_text, reply_markup=buttons)
+        invite_text = f"Поздравляем! Теперь присоединитесь к нашему закрытому каналу"
+        await bot.send_message(chat_id=user_id, text=invite_text, reply_markup=buttons)
 
         return web.json_response({"status": "success", "message": "Payment processed"})
 
