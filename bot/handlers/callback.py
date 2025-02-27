@@ -36,7 +36,7 @@ async def subscription_callback(callback):
 
     payment_url = payment.confirmation.confirmation_url
     buttons = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="Фокус группа - 3500 руб",
+        [InlineKeyboardButton(text="Фокус группа - 2999 руб",
                               url=payment_url)]
     ])
     await callback.message.answer(text="""Прокачай тело и ум с моим авторским онлайн-курсом йоге 
