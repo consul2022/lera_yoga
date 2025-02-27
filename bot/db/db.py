@@ -1,9 +1,8 @@
-from app.core.config import settings
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-
-engine = create_async_engine(settings.DATABASE_URL, echo=True)
+DATABASE_URL = ""
+engine = create_async_engine(DATABASE_URL, echo=True)
 
 # Асинхронная сессия
 SessionLocal = sessionmaker(
